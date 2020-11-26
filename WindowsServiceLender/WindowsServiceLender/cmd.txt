@@ -1,0 +1,21 @@
+C:\Users\aduser\Documents\Visual Studio 2015\Projects\WindowsServiceLender\WindowsServiceLender\bin\Debug
+
+InstallUtil.exe + Your copied path + \your service name + .exe
+
+InstallUtil.exe "C:\Users\aduser\Documents\Visual Studio 2015\Projects\WindowsServiceLender\WindowsServiceLender\bin\Debug\WindowsServiceLender.exe"
+////
+Steps for Installing the InstallUtil.exe
+
+1. Start >> All Programs >> Visual Studio 2015 >> Visual Studio Tools >> Right Click "Developer Command Prompt for VS2015" and click "Run as administrator"
+
+2. In VS 2015 Command Prompt, typed the location of .Net FrameWork. I.e. "CD C:\Windows\Microsoft.NET\Framework\v4.0.30319"
+
+3. InstallUtil.exe "E:\MyNewService\MyNewService\bin\Debug\MyNewService.exe"
+
+/////
+Steps for uninstalling services
+
+InstallUtil.exe -u + Your copied path + \your service name + .exe
+
+InstallUtil.exe-u "C:\Users\aduser\Documents\Visual Studio 2015\Projects\WindowsServiceLender\WindowsServiceLender\bin\Debug\WindowsServiceLender.exe"
+
