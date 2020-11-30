@@ -17,7 +17,8 @@ namespace WindowsServiceLender.DocOperations
     {
         public string SendForESign(List<DocumentField.SendDocumentInfo> docs)
         {
-            
+            bool _IsInperson = true;
+
             EnvelopeDefinition envDef = new EnvelopeDefinition();
             envDef.EmailSubject = "Email subject";
             envDef.EmailBlurb = "Email blurb";
@@ -53,141 +54,186 @@ namespace WindowsServiceLender.DocOperations
 
             envDef.Recipients = new Recipients();
             envDef.Recipients.Signers = new List<Signer>();
-          //envDef.Recipients.InPersonSigners = new List<InPersonSigner>();
-          //envDef.EnforceSignerVisibility = "true";
+            envDef.Recipients.InPersonSigners = new List<InPersonSigner>();
+            //envDef.EnforceSignerVisibility = "true";
 
 
-           // Adding Signers// 
+            // Adding Signers// 
 
             #region ONE SIGNER
-                         
 
-                    Signer signer = new Signer();
-                    signer.Tabs = new Tabs();
-                    signer.Tabs.SignHereTabs = new List<SignHere>();
-                    signer.Tabs.CheckboxTabs = new List<Checkbox>();
-                    signer.Tabs.DateSignedTabs = new List<DateSigned>();
-                    
-                    signer.Name = "Signer One";
-                    signer.Email = ConfigurationManager.AppSettings["Reci1Email"];
+            if (!_IsInperson)
+            {
+                Signer signer = new Signer();
+                signer.Tabs = new Tabs();
+                signer.Tabs.SignHereTabs = new List<SignHere>();
+                signer.Tabs.CheckboxTabs = new List<Checkbox>();
+                signer.Tabs.DateSignedTabs = new List<DateSigned>();
 
-                    signer.RecipientId = "1";
-                    signer.RoutingOrder = "1";
-                   
-                    SignHere signHere = new SignHere();
-                    signHere.DocumentId = "1";
-                    signHere.RecipientId ="1";
-                    signHere.AnchorString = "signhere1";
-                    signHere.AnchorXOffset = "0";
-                    signHere.AnchorYOffset = "0";
-                    signHere.AnchorUnits = "inches";
-                    signHere.AnchorIgnoreIfNotPresent = "false";
-                    signer.Tabs.SignHereTabs.Add(signHere);
+                signer.Name = "Signer One";
+                signer.Email = ConfigurationManager.AppSettings["Reci1Email"];
 
-                    DateSigned Datesign = new DateSigned();
-                    Datesign.DocumentId = "1";
-                    Datesign.RecipientId = "2";
-                    Datesign.AnchorString = "DATEHERE1";
-                    Datesign.AnchorXOffset = "0";
-                    Datesign.AnchorYOffset = "0";
-                    Datesign.AnchorUnits = "inches";
-                    Datesign.AnchorIgnoreIfNotPresent = "true";
-                    signer.Tabs.DateSignedTabs.Add(Datesign);
+                signer.RecipientId = "1";
+                signer.RoutingOrder = "1";
 
-                    envDef.Recipients.Signers.Add(signer);
-                
-                #endregion
+                SignHere signHere = new SignHere();
+                signHere.DocumentId = "1";
+                signHere.RecipientId = "1";
+                signHere.AnchorString = "signhere1";
+                signHere.AnchorXOffset = "0";
+                signHere.AnchorYOffset = "0";
+                signHere.AnchorUnits = "inches";
+                signHere.AnchorIgnoreIfNotPresent = "false";
+                signer.Tabs.SignHereTabs.Add(signHere);
+
+                DateSigned Datesign = new DateSigned();
+                Datesign.DocumentId = "1";
+                Datesign.RecipientId = "2";
+                Datesign.AnchorString = "DATEHERE1";
+                Datesign.AnchorXOffset = "0";
+                Datesign.AnchorYOffset = "0";
+                Datesign.AnchorUnits = "inches";
+                Datesign.AnchorIgnoreIfNotPresent = "true";
+                signer.Tabs.DateSignedTabs.Add(Datesign);
+
+                envDef.Recipients.Signers.Add(signer);
+            }
+            #endregion
 
             #region IN-PERSON Signer
-                //bool _IsInperson = false;
-                //string _inPersonHostEmail="";
-                //string _inPersonHostName="";
-                ////must be a docusign acc with inperson enabled
-                ////In-person signing mode                                        
+           
+         
+            //must be a docusign acc with inperson enabled
+            //In-person signing mode                                        
+            if (_IsInperson)
+            {
+                #region impsigner1
+                InPersonSigner Impsigner = new InPersonSigner();
+                Impsigner.Tabs = new Tabs();
+                Impsigner.Tabs.SignHereTabs = new List<SignHere>();
+                Impsigner.Tabs.DateSignedTabs = new List<DateSigned>();
 
-                //        InPersonSigner Impsigner = new InPersonSigner();
-                //        Impsigner.Tabs = new Tabs();
-                //        Impsigner.Tabs.SignHereTabs = new List<SignHere>();
-                //        Impsigner.Tabs.DateSignedTabs = new List<DateSigned>();
-
-                //        Impsigner.SignerName = "InpersonSigner One";
-                //        Impsigner.RecipientId = "1";
-                //        Impsigner.RoutingOrder ="1";
-                //        Impsigner.InPersonSigningType = "inPersonSigner";
-                //        Impsigner.HostName = _inPersonHostName;
-                //        Impsigner.HostEmail = _inPersonHostEmail;
-
-                      
-
-                //            SignHere signHereImp = new SignHere();
-                //            signHereImp.DocumentId = "1";
-                //            signHereImp.RecipientId = "1";
-                //            signHereImp.AnchorString = "SIGNHERE1";
-                //            signHereImp.AnchorXOffset = "0";
-                //            signHereImp.AnchorYOffset = "0";
-                //            signHereImp.AnchorUnits = "inches";
-                //            signHereImp.AnchorIgnoreIfNotPresent = "false";
-
-                //         Impsigner.Tabs.SignHereTabs.Add(signHere);
-                        
-                //        DateSigned signed = new DateSigned();
-                //        signed.DocumentId = "1";
-                //        signed.RecipientId = "1";
-                //        signed.AnchorString = "DATEHERE1";
-                //        signed.AnchorXOffset = "0";
-                //        signed.AnchorYOffset = "0";
-                //        signed.AnchorUnits = "inches";
-                //        signed.AnchorIgnoreIfNotPresent = "true";
-
-                //        Impsigner.Tabs.DateSignedTabs.Add(signed);
+                Impsigner.SignerName = "InpersonSigner one";
+                Impsigner.RecipientId = "1";
+                Impsigner.RoutingOrder = "1";
+                Impsigner.InPersonSigningType = "inPersonSigner";
+                Impsigner.HostName = "inperson host";
+                Impsigner.HostEmail = ConfigurationManager.AppSettings["ImpHostEmail"] ;
 
 
-                //        envDef.Recipients.InPersonSigners.Add(Impsigner);
-                    
 
-                
-            
+                SignHere signHereImp = new SignHere();
+                signHereImp.DocumentId = "1";
+                signHereImp.RecipientId = "1";
+                signHereImp.AnchorString = "SIGNHERE1";
+                signHereImp.AnchorXOffset = "0";
+                signHereImp.AnchorYOffset = "0";
+                signHereImp.AnchorUnits = "inches";
+                signHereImp.AnchorIgnoreIfNotPresent = "false";
+
+                Impsigner.Tabs.SignHereTabs.Add(signHereImp);
+
+                DateSigned signed = new DateSigned();
+                signed.DocumentId = "1";
+                signed.RecipientId = "1";
+                signed.AnchorString = "DATEHERE1";
+                signed.AnchorXOffset = "0";
+                signed.AnchorYOffset = "0";
+                signed.AnchorUnits = "inches";
+                signed.AnchorIgnoreIfNotPresent = "true";
+
+                Impsigner.Tabs.DateSignedTabs.Add(signed);
+
+
+                envDef.Recipients.InPersonSigners.Add(Impsigner);
+                #endregion
+
+                #region ImpSigner2
+                InPersonSigner Impsigner2 = new InPersonSigner();
+                Impsigner2.Tabs = new Tabs();
+                Impsigner2.Tabs.SignHereTabs = new List<SignHere>();
+                Impsigner2.Tabs.DateSignedTabs = new List<DateSigned>();
+
+                Impsigner2.SignerName = "InpersonSigner two";
+                Impsigner2.RecipientId = "2";
+                Impsigner2.RoutingOrder = "2";
+                Impsigner2.InPersonSigningType = "inPersonSigner";
+                Impsigner2.HostName = "inperson host";
+                Impsigner2.HostEmail = ConfigurationManager.AppSettings["ImpHostEmail"];
+
+
+
+                SignHere signHereImp2 = new SignHere();
+                signHereImp2.DocumentId = "2";
+                signHereImp2.RecipientId = "1";
+                signHereImp2.AnchorString = "SIGNHERE2";
+                signHereImp2.AnchorXOffset = "0";
+                signHereImp2.AnchorYOffset = "0";
+                signHereImp2.AnchorUnits = "inches";
+                signHereImp2.AnchorIgnoreIfNotPresent = "false";
+
+                Impsigner2.Tabs.SignHereTabs.Add(signHereImp2);
+
+                DateSigned signed2 = new DateSigned();
+                signed2.DocumentId = "1";
+                signed2.RecipientId = "1";
+                signed2.AnchorString = "DATEHERE2";
+                signed2.AnchorXOffset = "0";
+                signed2.AnchorYOffset = "0";
+                signed2.AnchorUnits = "inches";
+                signed2.AnchorIgnoreIfNotPresent = "true";
+
+                Impsigner2.Tabs.DateSignedTabs.Add(signed2);
+
+
+                envDef.Recipients.InPersonSigners.Add(Impsigner2);
+
+            }
+
+
+
             #endregion
 
             #region Adding ONE Joint Signer
-          
-          
-            
-                    Signer jointSigner = new Signer();
-                    jointSigner.Tabs = new Tabs();
-                    jointSigner.Tabs.SignHereTabs = new List<SignHere>();
-                    jointSigner.Tabs.DateSignedTabs = new List<DateSigned>();
 
-                    jointSigner.Name = "Joint Signer 1";
-                    jointSigner.Email = ConfigurationManager.AppSettings["Reci2Email"];
-                    jointSigner.RecipientId = "2";
-                    jointSigner.RoutingOrder = "2";
+            if (!_IsInperson)
+            {
 
-                    SignHere jointSignerTab = new SignHere();
-                    jointSignerTab.DocumentId = "1";
-                    jointSignerTab.RecipientId ="2";
-                    jointSignerTab.AnchorString = "SIGNHERE2";
-                    jointSignerTab.AnchorXOffset = "0";
-                    jointSignerTab.AnchorYOffset = "0";
-                    jointSignerTab.AnchorUnits = "inches";
-                    jointSignerTab.AnchorIgnoreIfNotPresent = "true";
+                Signer jointSigner = new Signer();
+                jointSigner.Tabs = new Tabs();
+                jointSigner.Tabs.SignHereTabs = new List<SignHere>();
+                jointSigner.Tabs.DateSignedTabs = new List<DateSigned>();
 
-                    jointSigner.Tabs.SignHereTabs.Add(jointSignerTab);
+                jointSigner.Name = "Joint Signer 1";
+                jointSigner.Email = ConfigurationManager.AppSettings["Reci2Email"];
+                jointSigner.RecipientId = "2";
+                jointSigner.RoutingOrder = "2";
 
-                    DateSigned JODateSigned = new DateSigned();
-                    JODateSigned.DocumentId = "1";
-                    JODateSigned.RecipientId = "2";
-                    JODateSigned.AnchorString = "DATEHERE2";
-                    JODateSigned.AnchorXOffset = "0";
-                    JODateSigned.AnchorYOffset = "0";
-                    JODateSigned.AnchorUnits = "inches";
-                    JODateSigned.AnchorIgnoreIfNotPresent = "true";
+                SignHere jointSignerTab = new SignHere();
+                jointSignerTab.DocumentId = "1";
+                jointSignerTab.RecipientId = "2";
+                jointSignerTab.AnchorString = "SIGNHERE2";
+                jointSignerTab.AnchorXOffset = "0";
+                jointSignerTab.AnchorYOffset = "0";
+                jointSignerTab.AnchorUnits = "inches";
+                jointSignerTab.AnchorIgnoreIfNotPresent = "true";
 
-                    jointSigner.Tabs.DateSignedTabs.Add(JODateSigned);
+                jointSigner.Tabs.SignHereTabs.Add(jointSignerTab);
 
-                    envDef.Recipients.Signers.Add(jointSigner);
+                DateSigned JODateSigned = new DateSigned();
+                JODateSigned.DocumentId = "1";
+                JODateSigned.RecipientId = "2";
+                JODateSigned.AnchorString = "DATEHERE2";
+                JODateSigned.AnchorXOffset = "0";
+                JODateSigned.AnchorYOffset = "0";
+                JODateSigned.AnchorUnits = "inches";
+                JODateSigned.AnchorIgnoreIfNotPresent = "true";
 
-            
+                jointSigner.Tabs.DateSignedTabs.Add(JODateSigned);
+
+                envDef.Recipients.Signers.Add(jointSigner);
+
+            }
             #endregion
      
 
@@ -235,3 +281,4 @@ namespace WindowsServiceLender.DocOperations
         }
     }
 }
+#endregion
