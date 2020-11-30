@@ -16,15 +16,7 @@ namespace WindowsServiceLender.DAL
     {
         public List<DocValues> MyConnection()
         {
-            // string constr = "Data Source=SYS73;Initial Catalog=ShyDatabase;User ID=sa;Password=sa123$";
-            //  SqlConnection con = new SqlConnection(constr);
-            //  con.Open();
-
-            //  string sqlquery = "SELECT *FROM NextGenPPP WHERE ID=1";
-            //  SqlCommand cmd = new SqlCommand(sqlquery, con);
-
-            //  SqlDataReader reader = cmd.ExecuteReader();
-            //   reader.Read();
+           
             List<DocValues> values = new List<DocValues>();
 
             values.Add(new DocValues { key = "wordcontrolname", value = "Zed" });
@@ -44,27 +36,6 @@ namespace WindowsServiceLender.DAL
             return values;
         }
 
-        //internal static T Value<T>(IDataRecord reader, string fldName, T defaultVal)
-        //{
-        //    object o;
-
-        //    for (int i = 0; i < reader.FieldCount; i++)
-        //    {
-        //        if (reader.GetName(i).Equals(fldName, StringComparison.OrdinalIgnoreCase))
-        //        {
-        //            o = reader[i];
-        //            if (o != null && o != DBNull.Value)
-        //            {
-       
-        //                return (T)Convert.ChangeType(o, typeof(T));
-        //            }
-        //            else
-        //                return defaultVal;
-
-        //        }
-        //    }
-        //    return defaultVal;
-        //}
 
 
     }

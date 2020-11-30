@@ -36,6 +36,7 @@ namespace WindowsServiceLender
         {
             BuildDocuSignFields docusign = new BuildDocuSignFields();
             List<DocumentField.SendDocumentInfo> Docs = new List<DocumentField.SendDocumentInfo>();
+            DocuEsign esn = new DocuEsign();
 
             #region build Doc one
 
@@ -50,6 +51,7 @@ namespace WindowsServiceLender
             #endregion
 
             #region build Doc two
+
             string filepath2 = ConfigurationManager.AppSettings["Docu2FilePath"];
             string base64worddoc1 = Convert.ToBase64String(File.ReadAllBytes(filepath2));
 
@@ -58,13 +60,10 @@ namespace WindowsServiceLender
             obj1.FileBase64String = new WordReader().FillValuesToDoc(Convert.FromBase64String(base64worddoc1), "", obj1);
             Docs.Add(obj1);
             #endregion
-
-            #region Sending Document For E Signing
-
-            DocuEsign esn = new DocuEsign();
+          
             string docuID = esn.SendForESign(Docs);
 
-            #endregion
+
 
             return docuID;
         }

@@ -22,6 +22,7 @@ namespace WindowsServiceLender.DocOperations
             envDef.EmailSubject = "Email subject";
             envDef.EmailBlurb = "Email blurb";
             envDef.Documents = new List<Document>();
+            
 
             #region Adding Doc One
 
@@ -31,6 +32,7 @@ namespace WindowsServiceLender.DocOperations
             doc1.DocumentId = "1";
             doc1.FileExtension = "docx";
             doc1.Pages = "1";
+            
        
             envDef.Documents.Add(doc1);
 
@@ -51,8 +53,8 @@ namespace WindowsServiceLender.DocOperations
 
             envDef.Recipients = new Recipients();
             envDef.Recipients.Signers = new List<Signer>();
-            envDef.Recipients.InPersonSigners = new List<InPersonSigner>();
-           // envDef.EnforceSignerVisibility = "true";
+          //envDef.Recipients.InPersonSigners = new List<InPersonSigner>();
+          //envDef.EnforceSignerVisibility = "true";
 
 
            // Adding Signers// 
@@ -82,9 +84,15 @@ namespace WindowsServiceLender.DocOperations
                     signHere.AnchorIgnoreIfNotPresent = "false";
                     signer.Tabs.SignHereTabs.Add(signHere);
 
-                    signer.ExcludedDocuments=new List<string>();
-           
-                  
+                    DateSigned Datesign = new DateSigned();
+                    Datesign.DocumentId = "1";
+                    Datesign.RecipientId = "2";
+                    Datesign.AnchorString = "DATEHERE1";
+                    Datesign.AnchorXOffset = "0";
+                    Datesign.AnchorYOffset = "0";
+                    Datesign.AnchorUnits = "inches";
+                    Datesign.AnchorIgnoreIfNotPresent = "true";
+                    signer.Tabs.DateSignedTabs.Add(Datesign);
 
                     envDef.Recipients.Signers.Add(signer);
                 
@@ -166,16 +174,17 @@ namespace WindowsServiceLender.DocOperations
 
                     jointSigner.Tabs.SignHereTabs.Add(jointSignerTab);
 
-                    DateSigned jointSigned = new DateSigned();
-                    jointSigned.DocumentId = "1";
-                    jointSigned.RecipientId = "2";
-                    jointSigned.AnchorString = "DATEHERE2";
-                    jointSigned.AnchorXOffset = "0";
-                    jointSigned.AnchorYOffset = "0";
-                    jointSigned.AnchorUnits = "inches";
-                    jointSigned.AnchorIgnoreIfNotPresent = "true";
+                    DateSigned JODateSigned = new DateSigned();
+                    JODateSigned.DocumentId = "1";
+                    JODateSigned.RecipientId = "2";
+                    JODateSigned.AnchorString = "DATEHERE2";
+                    JODateSigned.AnchorXOffset = "0";
+                    JODateSigned.AnchorYOffset = "0";
+                    JODateSigned.AnchorUnits = "inches";
+                    JODateSigned.AnchorIgnoreIfNotPresent = "true";
 
-                    jointSigner.Tabs.DateSignedTabs.Add(jointSigned);
+                    jointSigner.Tabs.DateSignedTabs.Add(JODateSigned);
+
                     envDef.Recipients.Signers.Add(jointSigner);
 
             
@@ -202,7 +211,7 @@ namespace WindowsServiceLender.DocOperations
         {
 
             #region auth_details
-            string integratorKey = "82fc3ad6-2fc1-43cd-b398-3a1025c1174c";
+            string integratorKey = ConfigurationManager.AppSettings["IntegratorKey"];
             string email = ConfigurationManager.AppSettings["DocuSignUserEmail"]; 
             string password = ConfigurationManager.AppSettings["DocuSignPassword"];
 
