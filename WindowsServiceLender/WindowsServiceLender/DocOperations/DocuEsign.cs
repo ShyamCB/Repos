@@ -277,7 +277,7 @@ namespace WindowsServiceLender.DocOperations
          
             #endregion
 
-            return loginInfo.LoginAccounts[1].AccountId;
+            return loginInfo.LoginAccounts[0].AccountId;
         }
     }
 }
